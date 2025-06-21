@@ -1,19 +1,26 @@
 services:
-  app:
-    build: ./backend
-    ports:
-      - "3000:3000"
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/mydb
-    depends_on:
-      - mongo
-
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
+ app:
+   build: ./backend
+   ports:
+     - "3000:3000"
+   environment:
+     - MONGO_URL=mongodb://mongo:27017/mydb
+     - REDIS_HOST=redis
+   depends_on:
+     - mongo
+     - redis
+ mongo:
+   image: mongo
+   ports:
+     - "27017:27017"
+   volumes:
+     - mongo_data:/data/db
+ redis:
+   image: redis:alpine
+   ports:
+     - "6379:6379"
+   volumes:
+     - redis_data:/data
 volumes:
   mongo_data:
+  redis_data:
