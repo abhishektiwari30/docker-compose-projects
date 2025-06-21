@@ -19,4 +19,13 @@ app.post('/data', async (req, res) => {
   res.json(newData);
 });
 
+const redis = require('redis');
+const redisClient = redis.createClient({
+ url: 'redis://redis:6379'
+});
+
+redisClient.connect()
+ .then(() => console.log("Connected to Redis"))
+ .catch(console.error);
+
 app.listen(3000, () => console.log("App running on port 3000"));
